@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "Plurk Conversation Exporter",
+  "version": "1.0.1",
+  "description": "Extract Plurk conversations, copy rich text, and export inline image/emote assets for migration to other platforms.",
+  "minimum_chrome_version": "114",
+  "icons": {
+    "16": "icons/16bl2.png",
+    "32": "icons/32bl2.png",
+    "48": "icons/48bl2.png",
+    "128": "icons/128bl2.png"
+  },
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "scripting",
+    "downloads",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://plurk.com/*",
+    "https://www.plurk.com/*",
+    "https://*.plurk.com/*"
+  ],
+  "action": {
+    "default_title": "Plurk Conversation Exporter",
+    "default_icon": {
+      "16": "icons/16bl2.png",
+      "32": "icons/32bl2.png",
+      "48": "icons/48bl2.png",
+      "128": "icons/128bl2.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://plurk.com/*",
+        "https://www.plurk.com/*",
+        "https://*.plurk.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plurk Conversation Exporter</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --brand: #8e6262;
+      --brand-soft: #eadadb;
+      --brand-soft-hover: #dfc6c8;
+      --ink: #332d2e;
+      --muted: #766b6c;
+      --paper: #fffafa;
+      --wash: #f5f1f0;
+      --line: #dfd5d3;
+      --button-light-text: #684848;
+      --button-primary-text: #fff;
+    }
+    * { box-sizing: border-box; }
+    body { width: 400px; max-width: 100%; margin: 0; padding: 18px; color: var(--ink); background: var(--wash); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .header { display: flex; align-items: center; gap: 11px; margin-bottom: 7px; }
+    .logo { width: 42px; height: 42px; flex: 0 0 auto; overflow: hidden; border-radius: 10px; }
+    .logo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .eyebrow { color: var(--brand); font-size: 10px; font-weight: 800; letter-spacing: .1em; }
+    h1 { margin: 3px 0 0; color: #4a3537; font-size: 20px; }
+    .intro { margin: 0 0 15px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .page-section { margin-top: 28px; }
+    .page-section:first-of-type { margin-top: 0; }
+    .page-section > h2 { margin: 0 0 10px; color: var(--ink); font-size: 16px; font-weight: 800; line-height: 1.35; }
+    .section-intro { margin: -3px 0 11px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .section { margin-top: 9px; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+    .section summary { display: flex; align-items: center; gap: 8px; padding: 12px 13px; color: var(--ink); cursor: pointer; list-style: none; }
+    .section summary::-webkit-details-marker { display: none; }
+    .section summary::after { margin-left: auto; color: var(--brand); content: "⌄"; }
+    .section[open] summary::after { content: "⌃"; }
+    .section summary h3 { margin: 0; font-size: 13px; font-weight: 800; }
+    .section-body { padding: 13px; border-top: 1px solid #eee8e7; }
+    .controls, .action-list { display: grid; gap: 8px; }
+    label { line-height: 1.4; }
+    .check { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 13px; }
+    .check input { width: 16px; height: 16px; accent-color: var(--brand); }
+    button { width: 100%; min-height: 39px; padding: 8px 11px; border: 0; border-radius: 9px; color: var(--button-light-text); background: var(--brand-soft); cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; text-align: left; }
+    button:hover { background: var(--brand-soft-hover); }
+    button.primary { color: var(--button-primary-text); background: var(--brand); }
+    button.primary:hover { background: #755050; }
+    button small { display: block; margin-top: 3px; color: inherit; font-size: 10px; font-weight: 400; line-height: 1.4; opacity: .88; }
+    .section-note { margin: 0 0 10px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .preview-section { margin-top: 30px; }
+    .preview-label { display: flex; align-items: end; justify-content: space-between; margin: 0 2px 8px; color: var(--ink); }
+    .preview-label h2 { margin: 0; font-size: 16px; font-weight: 800; line-height: 1.35; }
+    .status { min-height: 1.4em; color: var(--brand); font-size: 10px; font-weight: 600; text-align: right; }
+    .status.error { color: #9b4f55; opacity: 1; }
+    #preview { width: 100%; min-height: 280px; max-height: 460px; overflow: auto; padding: 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--paper); font-size: 12px; line-height: 1.7; }
+    #preview .plurk-entry { margin-bottom: 12px; padding-bottom: 14px; border-bottom: 1px solid #eee8e7; }
+    #preview .plurk-entry:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+    #preview .plurk-author { margin: 0 0 3px; color: var(--brand); font-weight: 800; }
+    #preview .plurk-body { margin: 0; white-space: normal; line-height: 1.7; }
+    #preview img { max-width: 100%; height: auto; vertical-align: middle; }
+    #preview img.inline-emote { max-width: 120px; max-height: 120px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo"><img src="icons/128bl2.png" alt="Plurk Conversation Exporter icon" /></div>
+    <div><div class="eyebrow">PLURK TOOL</div><h1>交流匯出工具</h1></div>
+  </div>
+  <div class="intro">將目前噗文與回覆整理成可複製或下載的內容。</div>
+
+  <section class="page-section">
+    <h2>準備內容</h2>
+    <details class="section" open>
+      <summary><h3>擷取設定</h3></summary>
+      <div class="section-body">
+        <div class="controls">
+          <label class="check"><input type="checkbox" id="includeAuthor" checked> 保留發言者</label>
+          <label class="check"><input type="checkbox" id="includeImages" checked> 保留圖片與表符</label>
+        </div>
+        <div class="action-list" style="margin-top: 13px;"><button id="extract" class="primary">擷取目前噗文<small>載入主噗與回覆，並在下方顯示預覽。</small></button></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="page-section export-section">
+    <h2>選擇匯出方式</h2>
+    <p class="section-intro">將擷取的內容複製或匯出成需要的格式。</p>
+    <details class="section">
+      <summary><h3>保留格式複製</h3></summary>
+      <div class="section-body">
+        <p class="section-note">複製文字、圖片與表符，貼上時盡量保留目前的排版與格式。</p>
+        <div class="action-list">
+          <button id="copyRich">複製含格式內容<small>一般方式貼上圖片，適合日常備份。</small></button>
+          <button id="copyRichOriginalSize">複製含格式內容（維持圖片尺寸）<small>保留目前圖片的顯示尺寸，不額外縮小。</small></button>
+          <button id="copyRichOriginalImages">複製含格式內容（使用原圖）<small>將縮圖改為原圖貼上，圖片可能較大。</small></button>
+        </div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><h3>純文字與素材</h3></summary>
+      <div class="section-body">
+        <p class="section-note">以純文字方式保存內容，圖片與表符可另外下載。</p>
+        <div class="action-list">
+          <button id="copyText">複製純文字<small>圖片與表符會以「圖片1、圖片2……」標記，可搭配下載的圖片檔案使用。</small></button>
+          <button id="downloadImages">下載圖片與表符<small>打包成 ZIP，並附上圖片編號對照表。</small></button>
+        </div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><h3>Word 文件</h3></summary>
+      <div class="section-body">
+        <p class="section-note">將目前內容與圖片整理成 Word 文件。</p>
+        <button id="exportDocx">匯出 Word 文件</button>
+      </div>
+    </details>
+  </section>
+
+  <section class="page-section preview-section">
+    <div class="preview-label"><h2>內容預覽</h2><span class="status" id="status" aria-live="polite"></span></div>
+    <div id="preview" aria-label="擷取結果預覽"></div>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
