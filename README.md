@@ -4,9 +4,9 @@
 
 ## GitHub Release（預覽版）
 
-- 版本：`v1.0.1`
-- 下載：`chrome-web-store/Plurk-Conversation-Exporter-v1.0.1.zip`
-- SHA-256：`D104C5362D1009818EAD2A119D14174DB57940BAC811E177EBC07079F043D6F5`
+- 版本：`v1.0.2`
+- 下載：`chrome-web-store/Plurk-Conversation-Exporter-v1.0.2.zip`
+- SHA-256：`D2D6786DE2535AB447D628DF65DBB58DDE5FB911AC70C10B2A3AA583945F03CB`
 
 ZIP 是給 Chrome「載入未封裝項目」使用的交付包，不是直接雙擊安裝的安裝程式。發布到 GitHub Release 時，請同時提供 SHA-256，讓下載者確認檔案未被替換。
 
@@ -22,6 +22,19 @@ ZIP 是給 Chrome「載入未封裝項目」使用的交付包，不是直接雙
 - 尚未透過 Chrome Web Store 審核；手動安裝需要開啟 Chrome 開發人員模式。
 - Plurk 頁面 DOM 或圖片 CDN 變更時，擷取及圖片匯出功能可能需要更新。
 - Chrome Web Store 上架前，請以本專案的 GitHub Release 作為唯一官方下載來源，並留意重新發布的非官方版本。
+
+## 授權
+
+本專案目前採用自訂的 **Source Available License**，不是 MIT、GPL 或其他一般 Open Source License。完整條款請參閱 [LICENSE](LICENSE)。
+
+- 免費供個人、非商業用途下載與安裝。
+- 可查看原始碼，用於學習、研究、測試、除錯及評估。
+- 未經作者事前書面許可，不得重新散布、重新發布、重新打包、商業使用、販售、出租、再授權，或將本工具／修改版本發布至 Chrome Web Store 或其他瀏覽器擴充功能商店。
+- 不得移除著作權與授權聲明，也不得將本專案全部或實質部分冒充為自己的原創作品。
+- 匯出內容的著作權仍屬於原內容權利人；使用本工具不代表取得匯出內容的著作權或公開發布權。
+- 使用者須自行負責匯出內容的保存、使用、重製、散布及其他處理方式。
+
+本授權自目前版本起適用。過去明確依 MIT License 發布的版本，其既有授權不追溯撤回，仍依原 MIT License 條款處理。
 
 Chrome Extension，用來將目前 Plurk 頁面的主噗與回覆整理成可複製、下載或匯出的內容，並支援 inline 圖片與表符。
 
