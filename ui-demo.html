@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plurk 交流匯出工具 UI Demo</title>
+  <link rel="stylesheet" href="ui-demo.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo"><img src="icons/128bl2.png" alt="Plurk Conversation Exporter icon" /></div>
+    <div><div class="eyebrow">PLURK TOOL</div><h1>交流匯出工具</h1></div>
+  </header>
+  <p class="intro">將目前噗文與回覆整理成可複製或下載的內容。</p>
+
+  <section class="page-section">
+    <h2>準備內容</h2>
+    <details class="section" open>
+      <summary><h3>擷取設定</h3></summary>
+      <div class="section-body">
+        <div class="controls">
+          <label class="check"><input type="checkbox" checked />保留發言者</label>
+          <label class="check"><input type="checkbox" checked />保留圖片與表符</label>
+        </div>
+        <div class="actions" style="margin-top: 13px;"><button class="primary">擷取目前噗文<small>載入主噗與回覆，並在下方顯示預覽。</small></button></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="page-section export-section">
+    <h2>選擇匯出方式</h2>
+    <p class="section-intro">將擷取的內容複製或匯出成需要的格式。</p>
+    <details class="section">
+      <summary><h3>保留格式複製</h3></summary>
+      <div class="section-body">
+        <p class="section-note">複製文字、圖片與表符，貼上時盡量保留目前的排版與格式。請依照目標平台選擇圖片處理方式。</p>
+        <div class="actions">
+          <button>複製含格式內容<small>使用遠端圖片 URL，速度較快。</small></button>
+          <button>複製含格式內容（嵌入圖片）<small>將圖片一併嵌入複製內容，資料較大但可降低對遠端圖片載入的依賴。</small></button>
+        </div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><h3>純文字與素材</h3></summary>
+      <div class="section-body">
+        <p class="section-note">以純文字方式保存內容，圖片與表符可另外下載。</p>
+        <div class="actions">
+          <button>複製純文字<small>圖片與表符會以「圖片1、圖片2……」標記，可搭配下載的圖片檔案使用。</small></button>
+          <button>下載圖片與表符<small>打包成 ZIP，並附上圖片編號對照表。</small></button>
+        </div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><h3>Word 文件</h3></summary>
+      <div class="section-body">
+        <p class="section-note">將目前內容與圖片整理成 Word 文件。</p>
+        <button>匯出 Word 文件</button>
+      </div>
+    </details>
+  </section>
+
+  <section class="page-section preview-section">
+    <div class="preview-label"><h2>內容預覽</h2><span class="preview-status">已擷取 3 則內容。</span></div>
+    <div id="preview" aria-label="擷取結果預覽">
+      <div class="plurk-entry"><p class="plurk-author">【小明】</p><p class="plurk-body">今天的活動照片：這是第一張 <span class="demo-image-marker">圖片1</span>，歡迎查看。</p></div>
+      <div class="plurk-entry"><p class="plurk-author">【小美】</p><p class="plurk-body">這是第二張 <span class="demo-image-marker">圖片2</span>，還有一個表符。</p></div>
+      <div class="plurk-entry"><p class="plurk-author">【小華】</p><p class="plurk-body">內容格式與圖片會在預覽中保留。</p></div>
+    </div>
+  </section>
+  <div class="demo-footnote">這是獨立 UI Demo，按鈕不會執行 Extension 功能。</div>
+</body>
+</html>
